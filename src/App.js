@@ -14,7 +14,7 @@ const App = () => {
   const [selectedBoardId, setSelectedBoardId] = useState(null);
 
   // This part is used for test
-  //
+  
   // const card1 = {
   //   card_id: 1,
   //   message: "I am 1",
@@ -83,12 +83,21 @@ const App = () => {
 
   const handleBoardSelect = (boardId) => {
     setSelectedBoardId(boardId);
+    backend
+    .getSelectedBoard(boardId)
+    .then((board) => {
+      setCardEntries(board.CardList === undefined ? [] : board.CardList)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   };
 
   const handleBoardDelete = (boardId) => {
     backend.deleteBoard(boardId);
     setBoardData((prev) => prev.filter((board) => board.board_id !== boardId));
   };
+
 
   return (
     <div className="page__container">

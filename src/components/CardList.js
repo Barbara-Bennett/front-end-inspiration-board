@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 
 const CardList = ({boardId, cardEntries, onUpdate, onDelete}) => {
   const cards = cardEntries
-                .filter((card) => card.board_id === boardId)
-                .sort((a, b) => a.card_id - b.card_id);
+                // .sort((a, b) => a.card_id - b.card_id);
+  console.log("list of cards is: " + cards)
 
   return (
     <div className="card-items__container">
