@@ -44,19 +44,30 @@ const App = () => {
   }, []);
 
   const updateLikeData = updatedCard =>{
-    const cards= cardEntries.map(card => {
-      if (card.card_id === updatedCard.card_id) {
-        return updatedCard;
-      }else {
-        return card;
-      }
-    }); 
-    setCardEntries(cards);
+    backend
+      .addLike(updatedCard.card_id)
+      .then(
+      setCardEntries(cardEntries.map(card => {
+        if (card.card_id === updatedCard.card_id) {
+          return updatedCard;
+        }else {
+          return card;
+        }
+      })))
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const deleteCardData = deleteCard =>{
-    const cards= cardEntries.filter((card) => card.card_id !== deleteCard.card_id);
-    setCardEntries(cards);
+    backend
+      .deleteCard(deleteCard.card_id)
+      .then(
+        setCardEntries(
+          cardEntries.filter((card) => card.card_id !== deleteCard.card_id)))
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleNewBoardSubmit = (data) => {
