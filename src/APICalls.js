@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const kBoardBaseUrl = "https://inspiration-board-backend-t6x0.onrender.com/boards";
+// const kBoardBaseUrl = "https://inspiration-board-backend-t6x0.onrender.com/boards";
+const kBoardBaseUrl = "http://127.0.0.1:5000/boards";
 
 // API CALL FUNCTIONS FOR board_routes
 
@@ -96,7 +97,8 @@ export const getBoardCards = (board_id) => {
 
 // API CALL FUNCTIONS FOR card_routes
 
-const kCardBaseUrl = "https://inspiration-board-backend-t6x0.onrender.com/cards";
+// const kCardBaseUrl = "https://inspiration-board-backend-t6x0.onrender.com/cards";
+const kCardBaseUrl = "http://127.0.0.1:5000/cards";
 
 /**
  * deleteCard takes one argument, an int representing a card id.

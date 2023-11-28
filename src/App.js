@@ -25,76 +25,81 @@ const App = () => {
         console.log("Error in getAllBoards()", err);
       });
   }, []);
-  
+
   const handleNewBoardSubmit = (data) => {
     backend
-    .createNewBoard(data)
-    .then((result) => {
-      setBoardData((prevBoardData) => [result, ...prevBoardData]);
-    })
-    .catch((err) => {
-      console.log("Error in handleNewBoardSubmit", err);
-    })
+      .createNewBoard(data)
+      .then((result) => {
+        setBoardData((prevBoardData) => [result, ...prevBoardData]);
+      })
+      .catch((err) => {
+        console.log("Error in handleNewBoardSubmit", err);
+      });
   };
-  
+
   const handleBoardSelect = (board) => {
     setSelectedBoard(board);
     backend
-    .getBoardCards(board.id)
-    .then((result) => {
-      setCardEntries(result);
-    })
-    .catch((err) => {
-      console.log("Error in handleBoardSelect", err)
-    })
+      .getBoardCards(board.id)
+      .then((result) => {
+        setCardEntries(result);
+      })
+      .catch((err) => {
+        console.log("Error in handleBoardSelect", err);
+      });
   };
-  
+
   const handleBoardDelete = (boardId) => {
     backend
-    .deleteBoard(boardId)
-    .then(setBoardData((prev) => prev.filter((board) => board.board_id !== boardId))
-    )
-    .catch((err) => {
-      console.log("Error in handleBoardDelete", err)
-    })
+      .deleteBoard(boardId)
+      .then(() => {
+        setBoardData((prev) => prev.filter((board) => board.board_id !== boardId));
+        window.location.reload(); // Recarregue a página
+      })
+      .catch((err) => {
+        console.log("Error in handleBoardDelete", err);
+      });
   };
-  
+
   const handleNewCardSubmit = (data) => {
     backend
-    .createNewCard(data)
-    .then((result) => {
-      setCardEntries((prev) => [...prev, result])
-    })
-    .catch((err) => {
-      console.log("Error in handleNewCardSubmit", err)
-    })
+      .createNewCard(data)
+      .then((result) => {
+        setCardEntries((prev) => [...prev, result]);
+      })
+      .catch((err) => {
+        console.log("Error in handleNewCardSubmit", err);
+      });
   };
 
   const handleAddLike = (cardId) => {
     backend
-    .addLike(cardId)
-    .then((result) => {
-      setCardEntries(cardEntries.map((card) => {
-        if (card.card_id === cardId) {
-          return {...card, likes_count:result.card_like_count};
-        } else {
-          return card;
-        };
-      }))
-    })
-    .catch((err) => {
-      console.log("Error in handleAddLike", err)
-    })
+      .addLike(cardId)
+      .then((result) => {
+        setCardEntries(
+          cardEntries.map((card) => {
+            if (card.card_id === cardId) {
+              return { ...card, likes_count: result.card_like_count };
+            } else {
+              return card;
+            }
+          })
+        );
+      })
+      .catch((err) => {
+        console.log("Error in handleAddLike", err);
+      });
   };
 
   const handleDeleteCard = (cardId) => {
     backend
-    .deleteCard(cardId)
-    .then(setCardEntries((prev) => prev.filter((card) => card.card_id !== cardId))
-    )
-    .catch((err) => {
-      console.log("Error in handleDelete Card", err)
-    });
+      .deleteCard(cardId)
+      .then(
+        setCardEntries((prev) => prev.filter((card) => card.card_id !== cardId))
+      )
+      .catch((err) => {
+        console.log("Error in handleDelete Card", err);
+      });
   };
 
   return (
@@ -102,13 +107,11 @@ const App = () => {
       <div className="content__container">
         <h1>Inspiration Board</h1>
         <section className="boards__container">
-          
           <section className="BoardList__container">
-            <BoardList 
-              boardData={boardData} 
-              onBoardSelect={handleBoardSelect} 
+            <BoardList
+              boardData={boardData}
+              onBoardSelect={handleBoardSelect}
               handleBoardDelete={handleBoardDelete}
-
             />
           </section>
 
@@ -116,14 +119,14 @@ const App = () => {
             <NewBoardForm handleNewBoardSubmit={handleNewBoardSubmit} />
           </section>
         </section>
-        {selectedBoard ?
+        {selectedBoard ? (
           <section className="cards__container">
             <section className="cardList__container">
               <CardList
-                board = {selectedBoard}
-                cardEntries = {cardEntries}
-                onAddLike = {handleAddLike}
-                onDelete = {handleDeleteCard}
+                board={selectedBoard}
+                cardEntries={cardEntries}
+                onAddLike={handleAddLike}
+                onDelete={handleDeleteCard}
               />
             </section>
 
@@ -134,7 +137,7 @@ const App = () => {
               />
             </section>
           </section>
-          : null}
+        ) : null}
       </div>
     </div>
   );
