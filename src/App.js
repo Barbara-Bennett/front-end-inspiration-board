@@ -38,6 +38,11 @@ const App = () => {
   };
 
   const handleBoardSelect = (board) => {
+    if (!board) {
+      console.log('Selected board is null or undefined');
+      return;
+    }
+
     setSelectedBoard(board);
     backend
       .getBoardCards(board.id)
@@ -54,7 +59,7 @@ const App = () => {
       .deleteBoard(boardId)
       .then(() => {
         setBoardData((prev) => prev.filter((board) => board.board_id !== boardId));
-        window.location.reload(); // Recarregue a página
+        window.location.reload();
       })
       .catch((err) => {
         console.log("Error in handleBoardDelete", err);

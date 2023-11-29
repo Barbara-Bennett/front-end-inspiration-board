@@ -41,6 +41,7 @@ const NewCardForm = ({ boardId, createNewCard }) => {
           value={message}
           onChange={generateMessage}
         />
+        <small>Up to 40 characters</small>
         <p id="preview">Preview: {message}</p>
         {!invalidForm ? (
           <input type="Submit" className="submit-btn" />
